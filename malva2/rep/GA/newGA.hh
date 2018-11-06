@@ -60,7 +60,7 @@ skeleton newGA
 
 		friend ostream& operator<< (ostream& os, const Problem& pbm);
 		friend istream& operator>> (istream& is, Problem& pbm);
-    int loadinstancia(Problem& pbm, char* ruta) const;
+    int loadInstance(Problem& pbm, char* ruta) const;
 
 		Problem& operator=  (const Problem& pbm);
 		bool operator== (const Problem& pbm) const;
@@ -69,24 +69,20 @@ skeleton newGA
 		Direction direction () const;
 
 		int dimension() const;
-    int& getsueldo(int index) const;
-    double& gethabilidad(int index) const;
-    int& getdisponibilidad(int index) const;
-    int& gettiempotarea(int index) const;
-    int& getautonomiavehiculo(int index) const;
-    int cantidadempleados() const;
-    int limiteproyecto() const;
-
+    int& getAutonomiaVehiculo(int index) const;
+    int getCantidadVehiculos() const;
+    int getLargoMapa() const;
+    int getAnchoMapa() const;
+    int& getValorPosicionMapa(int largo, int ancho) const;
 	private:
 
 		int _dimension;
     int * _autonomia_vehiculo;
-    int * _sueldo_empleado;
-    double * _habilidad_empleado;
-    int * _disponibilidad_empleado;
-    int _cantidad_empleados;
-    int * _tiempo_tarea;
-    int _limite_proyecto;
+    int _cantidad_vehiculos;
+    int _largo_mapa;
+    int _ancho_mapa;
+    int ** _mapa;
+
   };
 
 //Solution ----------------------------------------------------------------------------

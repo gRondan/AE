@@ -14,8 +14,9 @@ skeleton newGA
 {
 
 	// Problem ---------------------------------------------------------------
-	Problem::Problem ():_dimension(0),_sueldo_empleado(NULL),_habilidad_empleado(NULL),_disponibilidad_empleado(NULL),_cantidad_empleados(0),_tiempo_tarea(NULL),_limite_proyecto(0)
+	Problem::Problem ():_dimension(0),_cantidad_vehiculos(NULL),_largo_mapa(NULL),_ancho_mapa(NULL),_autonomia_vehiculo(NULL),_mapa(NULL)
 	{}
+
 
 	ostream& operator<< (ostream& os, const Problem& pbm)
 	{
@@ -29,60 +30,92 @@ skeleton newGA
 		return is;
 	}
 
-	int Problem::loadinstancia(Problem& pbm, char* ruta) const{
+	int Problem::loadInstance(Problem& pbm, char* ruta) const{
 		char buffer[MAX_BUFFER];
 		string line, subline;
 		ifstream readFile(ruta);
-
-		//leo anatomia de vehiculos
+		//cantidad vehiculos
 		getline(readFile,line	);
 		stringstream iss(line);
-		pbm._dimension = 2; // ver como cargar el largo
-		pbm._autonomia_vehiculo = new int[pbm._dimension];
-		int indiceVehiculo = 0;
-		while (getline(iss,subline, '-')){
-			int n = subline.length();
-			char char_array[n+1];
+		// while (getline(iss,subline, ' ')){
+		getline(iss,subline, ' ');
+		int n = subline.length();
+		char char_array[n+1];
+		strcpy(char_array, subline.c_str());
+		pbm._dimension = atoi(char_array);
+		pbm._cantidad_vehiculos = pbm._dimension;
+		pbm._autonomia_vehiculo = new int[pbm._cantidad_vehiculos];
+		// }
+		// mapa _largo
+		getline(readFile,line	);
+		stringstream iss2(line);
+		getline(iss2,subline, ' ');
+		// while (getline(iss,subline, ' ')){
+		n = subline.length();
+		char_array[n+1];
+		strcpy(char_array, subline.c_str());
+		pbm._largo_mapa = atoi(char_array);
+		//mapa ancho
+		getline(readFile,line	);
+		stringstream iss3(line);
+		getline(iss3,subline, ' ');
+		// while (getline(iss,subline, ' ')){
+		n = subline.length();
+		char_array[n+1];
+		strcpy(char_array, subline.c_str());
+		pbm._ancho_mapa = atoi(char_array);
+		pbm._mapa = new int*[pbm._largo_mapa];
+		for (int l = 0; l < pbm._largo_mapa; l++) {
+			pbm._mapa[l] = new int[pbm._ancho_mapa];
+		}
+		//autonomia
+		getline(readFile,line	);
+		stringstream iss4(line);
+		int iterVehiculo = 0;
+		while (getline(iss4,subline, ' ')){
+			n = subline.length();
+			char_array[n+1];
 			strcpy(char_array, subline.c_str());
-			printf("%s\n",char_array);
-			pbm._autonomia_vehiculo[indiceVehiculo] = atoi(char_array);
+			pbm._autonomia_vehiculo[iterVehiculo] = atoi(char_array);
+			iterVehiculo ++;
+		}
+		//matriz
+		int fila = 0;
+		while(getline(readFile,line	))   {
+			stringstream iss5(line);
+			int columna = 0;
+			while (getline(iss5,subline, ' ')){
+				n = subline.length();
+				char_array[n+1];
+				strcpy(char_array, subline.c_str());
+				pbm._mapa[fila][columna] = atoi(char_array);
+				columna ++;
+			}
+			fila ++;
 		}
 
-
-		//leo matriz del mapa
-		// int contLinea = 1;
-		// while(getline(readFile,line	))   {
-		// 		stringstream iss(line);
-		// 		string line2;
-		//
-		// 		int indice;
-		// 		int largo = indice;
-		// 		indice = 0;
-		// 		while (getline(iss,subline, '-')){
-		// 			int n = subline.length();
-    // 			char char_array[n+1];
-		// 	    strcpy(char_array, subline.c_str());
-		// 				if(contLinea == 1){
-		// 					pbm._cantidad_empleados = indice +1;
-		// 					pbm._disponibilidad_empleado = new int[pbm._cantidad_empleados];
-		// 						pbm._habilidad_empleado = new double[pbm._cantidad_empleados];
-		// 							pbm._sueldo_empleado = new int[pbm._cantidad_empleados];
-		// 				}
-		// 				else if(contLinea == 2){
-		//
-		// 					pbm._disponibilidad_empleado[indice] = atoi(char_array);
-		// 				}else if(contLinea == 3){
-		// 					stringstream ss(subline);
-		// 					double x;
-		// 					ss >> x;
-		// 	          pbm._habilidad_empleado[indice] = strtod(char_array, NULL);
-		// 				}else if(contLinea == 4){
-		// 	          pbm._sueldo_empleado[indice] = atoi(char_array);
-		// 				}
-		// 				indice++;
-		// 		}
-		// 		contLinea ++;
-		// }
+		//log
+		printf("%s", "dimension: ");
+		printf("%d\n", pbm._dimension);
+		printf("%s", "_cantidad_vehiculos: ");
+		printf("%d\n", pbm._cantidad_vehiculos);
+		printf("%s", "_largo_mapa: ");
+		printf("%d\n", pbm._largo_mapa);
+		printf("%s", "_ancho_mapa: ");
+		printf("%d\n", pbm._ancho_mapa);
+		printf("%s", "autonomia: ");
+		for(int i = 0; i < pbm._cantidad_vehiculos; i++){
+			printf("%d-", pbm._autonomia_vehiculo[i]);
+		}
+		printf("%s\n", "");
+		printf("%s\n", "matriz: ");
+		for(int j = 0; j < pbm._largo_mapa; j++){
+			for(int k = 0; k < pbm._ancho_mapa; k++){
+				printf("%d-", (pbm._mapa[j][k]));
+			}
+			printf("%s\n", "");
+		}
+		printf("%s\n", "");
 
 		return 0;
 	}
@@ -110,35 +143,30 @@ skeleton newGA
 		return _dimension;
 	}
 
-	int& Problem::getsueldo(int index) const
+	int Problem::getCantidadVehiculos() const
 	{
-		return _sueldo_empleado[index];
+		return _cantidad_vehiculos;
 	}
 
 
-	double& Problem::gethabilidad(int index) const
+	int Problem::getLargoMapa() const
 	{
-		return _habilidad_empleado[index];
+		return _largo_mapa;
 	}
 
-	int& Problem::getdisponibilidad(int index) const
+	int Problem::getAnchoMapa() const
 	{
-		return _disponibilidad_empleado[index];
+		return _ancho_mapa;
 	}
 
-	int Problem::cantidadempleados() const
+	int& Problem::getAutonomiaVehiculo(int index) const
 	{
-		return _cantidad_empleados;
+		return _autonomia_vehiculo[index];
 	}
 
-	int& Problem::gettiempotarea(int index) const
+	int& Problem::getValorPosicionMapa(int largo,int ancho) const
 	{
-		return _tiempo_tarea[index];
-	}
-
-  int Problem::limiteproyecto() const
-	{
-		return _limite_proyecto;
+		return _mapa[largo][ancho];
 	}
 
 
@@ -147,7 +175,6 @@ skeleton newGA
 	Problem::~Problem()
 	{
 	}
-
 	// Solution --------------------------------------------------------------
 
 	Solution::Solution (const Problem& pbm):_pbm(pbm),_var(pbm.dimension())
@@ -212,56 +239,56 @@ skeleton newGA
 
 	void Solution::initialize()
 	{
-		double tiempo_empleado[_pbm.cantidadempleados()+1];
-		for (int k=1;k<=_pbm.cantidadempleados();k++){
-			tiempo_empleado[k] = 0.0;
-		}
-		for (int i=0;i<_pbm.dimension();i++){
-			bool encontre = false;
-			while (! encontre){
-				int indice = rand_int(1,_pbm.cantidadempleados());
-				double aux = tiempo_empleado[indice];
-				aux += _pbm.gettiempotarea(i)/(0.5 +_pbm.gethabilidad(indice-1));
-				if (isValid(aux, _pbm.getdisponibilidad(indice-1), _pbm.limiteproyecto())){
-						_var[i]= indice;
-						tiempo_empleado[indice] = aux;
-						encontre = true;
-				}
-			}
-
-		}
+		// double tiempo_empleado[_pbm.cantidadempleados()+1];
+		// for (int k=1;k<=_pbm.cantidadempleados();k++){
+		// 	tiempo_empleado[k] = 0.0;
+		// }
+		// for (int i=0;i<_pbm.dimension();i++){
+		// 	bool encontre = false;
+		// 	while (! encontre){
+		// 		int indice = rand_int(1,_pbm.cantidadempleados());
+		// 		double aux = tiempo_empleado[indice];
+		// 		aux += _pbm.gettiempotarea(i)/(0.5 +_pbm.gethabilidad(indice-1));
+		// 		if (isValid(aux, _pbm.getdisponibilidad(indice-1), _pbm.limiteproyecto())){
+		// 				_var[i]= indice;
+		// 				tiempo_empleado[indice] = aux;
+		// 				encontre = true;
+		// 		}
+		// 	}
+		//
+		// }
 
 
 
 	}
 
-	bool Solution::isValid(double coef, int disponibilidad_empleado, int limite_proyecto){
-		double cantidad_dias_empleado = coef/disponibilidad_empleado;
-		double limite_proyecto_double = limite_proyecto * 1.0;
-		return (limite_proyecto_double >= cantidad_dias_empleado);
-		// return (limite_proyecto >= (int) ceil(cantidad_dias_empleado));
-	}
+	// bool Solution::isValid(double coef, int disponibilidad_empleado, int limite_proyecto){
+	// 	double cantidad_dias_empleado = coef/disponibilidad_empleado;
+	// 	double limite_proyecto_double = limite_proyecto * 1.0;
+	// 	return (limite_proyecto_double >= cantidad_dias_empleado);
+	// 	// return (limite_proyecto >= (int) ceil(cantidad_dias_empleado));
+	// }
 
 	double Solution::fitness ()
 	{
-    double fitness = 0.0;
-		double tiempo_total = 0.0;
-		int limite_proyecto = _pbm.limiteproyecto();
-		double tiempo_empleado[_pbm.cantidadempleados()+1];
-		for (int k=1;k<=_pbm.cantidadempleados();k++){
-			tiempo_empleado[k] = 0.0;
-		}
-		for (int i=0;i<_var.size();i++){//recorro tupla solucion(tareas)
-			int indice = _var[i]; //Indice de empleado
-			tiempo_empleado[indice] += _pbm.gettiempotarea(i)/(0.5 +_pbm.gethabilidad(indice-1));
-		}
-		for(int j=1;j<=_pbm.cantidadempleados();j++){
-			int disponibilidad_empleado = _pbm.getdisponibilidad(j-1);
-			int sueldo_empleado = _pbm.getsueldo(j-1);
-			double cantidad_dias_empleado = tiempo_empleado[j]/disponibilidad_empleado;
-			fitness +=(int) ceil(cantidad_dias_empleado) * sueldo_empleado;
-		}
-		return fitness;
+    // double fitness = 0.0;
+		// double tiempo_total = 0.0;
+		// int limite_proyecto = _pbm.limiteproyecto();
+		// double tiempo_empleado[_pbm.cantidadempleados()+1];
+		// for (int k=1;k<=_pbm.cantidadempleados();k++){
+		// 	tiempo_empleado[k] = 0.0;
+		// }
+		// for (int i=0;i<_var.size();i++){//recorro tupla solucion(tareas)
+		// 	int indice = _var[i]; //Indice de empleado
+		// 	tiempo_empleado[indice] += _pbm.gettiempotarea(i)/(0.5 +_pbm.gethabilidad(indice-1));
+		// }
+		// for(int j=1;j<=_pbm.cantidadempleados();j++){
+		// 	int disponibilidad_empleado = _pbm.getdisponibilidad(j-1);
+		// 	int sueldo_empleado = _pbm.getsueldo(j-1);
+		// 	double cantidad_dias_empleado = tiempo_empleado[j]/disponibilidad_empleado;
+		// 	fitness +=(int) ceil(cantidad_dias_empleado) * sueldo_empleado;
+		// }
+		// return fitness;
 	}
 
 	char *Solution::to_String() const
@@ -404,125 +431,125 @@ skeleton newGA
 
 	void Crossover::cross(Solution& sol1,Solution& sol2) const
 	{
-		bool iguales = true;
-		for(int y=0;y <sol1.pbm().dimension(); y++){
-			if (sol1.var(y) != sol2.var(y)){
-				iguales = false;
-				break;
-			}
-		}
-		if(iguales){
-			sol2.initialize();
-		}else{
-			int i=0;
-			Rarray<int> aux(sol1.pbm().dimension());
-			Rarray<int> aux2(sol2.pbm().dimension());
-			aux=sol2.array_var();
-			aux2=sol1.array_var();
-			bool end = false;
-			double tiempo_empleado[sol1.pbm().cantidadempleados() +1];
-			double tiempo_empleado2[sol1.pbm().cantidadempleados() +1];
-			double coef =0;
-			for (int k=1;k<=sol1.pbm().cantidadempleados();k++){
-				tiempo_empleado[k] = 0.0;
-				tiempo_empleado2[k] = 0.0;
-			}
-			double tiempo =0;
-			int limit=rand_int((sol1.pbm().dimension()/2)+1,sol1.pbm().dimension()-1);
-			int limit2=rand_int(0,limit-1);
-			for (i=0;i<limit2;i++){
-				sol2.var(i)=sol1.var(i);
-				coef = sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(sol2.var(i)-1));
-				tiempo_empleado2[sol2.var(i)] += coef;
-			}
-
-			for (int i=0;i<limit2;i++){
-				sol1.var(i)=aux[i];
-				coef = sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-				tiempo_empleado[sol1.var(i)] += coef;
-			}
-
-			for (i= limit2; i<limit;i++){
-				tiempo = tiempo_empleado2[sol2.var(i)];
-				tiempo += sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(sol2.var(i)-1));
-				if(sol2.isValid(tiempo, sol2.pbm().getdisponibilidad(sol2.var(i)-1), sol2.pbm().limiteproyecto())){
-					tiempo_empleado2[sol2.var(i)] = tiempo;
-				}else{
-					tiempo = tiempo_empleado2[sol1.var(i)];
-					tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-					if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-						tiempo_empleado2[sol1.var(i)] = tiempo;
-						sol2.var(i) = sol1.var(i);
-					}
-					else{
-						end = true;
-						break;
-					}
-				}
-				if(!end){
-					//SOLUCION1
-					tiempo = tiempo_empleado[sol1.var(i)];
-					tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-					if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-						tiempo_empleado[sol1.var(i)] = tiempo;
-					}else{
-						tiempo = tiempo_empleado[aux[i]];
-						tiempo += sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(aux[i]-1));
-						if(sol2.isValid(tiempo, sol2.pbm().getdisponibilidad(aux[i]-1), sol2.pbm().limiteproyecto())){
-							tiempo_empleado[aux[i]] = tiempo;
-							sol1.var(i) = aux[i];
-						}else{
-							end = true;
-							break;
-						}
-					}
-				}
-			}
-			if(!end){
-				for (i=limit;i<sol1.pbm().dimension();i++){
-					tiempo = tiempo_empleado2[sol1.var(i)];
-					double _habilidad_empleado = sol1.pbm().gethabilidad(sol1.var(i)-1);
-					tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +_habilidad_empleado);
-					if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-						tiempo_empleado2[sol1.var(i)] = tiempo;
-						sol2.var(i) = sol1.var(i);
-					}else{
-						tiempo = tiempo_empleado2[sol2.var(i)];
-						tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol2.var(i)-1));
-						if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol2.var(i)-1), sol1.pbm().limiteproyecto())){
-							tiempo_empleado2[sol2.var(i)] = tiempo;
-						}else{
-							end = true;
-							break;
-						}
-					}
-				}
-			}
-			if(!end){
-				for (i=limit;i<sol1.pbm().dimension();i++){
-					tiempo = tiempo_empleado[aux[i]];
-					tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(aux[i]-1));
-					if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(aux[i]-1), sol1.pbm().limiteproyecto())){
-						sol1.var(i)=aux[i];
-						tiempo_empleado[sol1.var(i)] = tiempo;
-					}else{
-						tiempo = tiempo_empleado[sol1.var(i)];
-						tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-						if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-							tiempo_empleado[sol1.var(i)] = tiempo;
-						}else{
-							end = true;
-							break;
-						}
-
-					}
-				}
-			}
-			if(end){ //no hago el cruzamiento
-				sol2.array_var()=aux;
-				sol1.array_var()=aux2;
-			}
-		}
+		// bool iguales = true;
+		// for(int y=0;y <sol1.pbm().dimension(); y++){
+		// 	if (sol1.var(y) != sol2.var(y)){
+		// 		iguales = false;
+		// 		break;
+		// 	}
+		// }
+		// if(iguales){
+		// 	sol2.initialize();
+		// }else{
+		// 	int i=0;
+		// 	Rarray<int> aux(sol1.pbm().dimension());
+		// 	Rarray<int> aux2(sol2.pbm().dimension());
+		// 	aux=sol2.array_var();
+		// 	aux2=sol1.array_var();
+		// 	bool end = false;
+		// 	double tiempo_empleado[sol1.pbm().cantidadempleados() +1];
+		// 	double tiempo_empleado2[sol1.pbm().cantidadempleados() +1];
+		// 	double coef =0;
+		// 	for (int k=1;k<=sol1.pbm().cantidadempleados();k++){
+		// 		tiempo_empleado[k] = 0.0;
+		// 		tiempo_empleado2[k] = 0.0;
+		// 	}
+		// 	double tiempo =0;
+		// 	int limit=rand_int((sol1.pbm().dimension()/2)+1,sol1.pbm().dimension()-1);
+		// 	int limit2=rand_int(0,limit-1);
+		// 	for (i=0;i<limit2;i++){
+		// 		sol2.var(i)=sol1.var(i);
+		// 		coef = sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(sol2.var(i)-1));
+		// 		tiempo_empleado2[sol2.var(i)] += coef;
+		// 	}
+		//
+		// 	for (int i=0;i<limit2;i++){
+		// 		sol1.var(i)=aux[i];
+		// 		coef = sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
+		// 		tiempo_empleado[sol1.var(i)] += coef;
+		// 	}
+		//
+		// 	for (i= limit2; i<limit;i++){
+		// 		tiempo = tiempo_empleado2[sol2.var(i)];
+		// 		tiempo += sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(sol2.var(i)-1));
+		// 		if(sol2.isValid(tiempo, sol2.pbm().getdisponibilidad(sol2.var(i)-1), sol2.pbm().limiteproyecto())){
+		// 			tiempo_empleado2[sol2.var(i)] = tiempo;
+		// 		}else{
+		// 			tiempo = tiempo_empleado2[sol1.var(i)];
+		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
+		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
+		// 				tiempo_empleado2[sol1.var(i)] = tiempo;
+		// 				sol2.var(i) = sol1.var(i);
+		// 			}
+		// 			else{
+		// 				end = true;
+		// 				break;
+		// 			}
+		// 		}
+		// 		if(!end){
+		// 			//SOLUCION1
+		// 			tiempo = tiempo_empleado[sol1.var(i)];
+		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
+		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
+		// 				tiempo_empleado[sol1.var(i)] = tiempo;
+		// 			}else{
+		// 				tiempo = tiempo_empleado[aux[i]];
+		// 				tiempo += sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(aux[i]-1));
+		// 				if(sol2.isValid(tiempo, sol2.pbm().getdisponibilidad(aux[i]-1), sol2.pbm().limiteproyecto())){
+		// 					tiempo_empleado[aux[i]] = tiempo;
+		// 					sol1.var(i) = aux[i];
+		// 				}else{
+		// 					end = true;
+		// 					break;
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	if(!end){
+		// 		for (i=limit;i<sol1.pbm().dimension();i++){
+		// 			tiempo = tiempo_empleado2[sol1.var(i)];
+		// 			double _habilidad_empleado = sol1.pbm().gethabilidad(sol1.var(i)-1);
+		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +_habilidad_empleado);
+		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
+		// 				tiempo_empleado2[sol1.var(i)] = tiempo;
+		// 				sol2.var(i) = sol1.var(i);
+		// 			}else{
+		// 				tiempo = tiempo_empleado2[sol2.var(i)];
+		// 				tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol2.var(i)-1));
+		// 				if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol2.var(i)-1), sol1.pbm().limiteproyecto())){
+		// 					tiempo_empleado2[sol2.var(i)] = tiempo;
+		// 				}else{
+		// 					end = true;
+		// 					break;
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// 	if(!end){
+		// 		for (i=limit;i<sol1.pbm().dimension();i++){
+		// 			tiempo = tiempo_empleado[aux[i]];
+		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(aux[i]-1));
+		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(aux[i]-1), sol1.pbm().limiteproyecto())){
+		// 				sol1.var(i)=aux[i];
+		// 				tiempo_empleado[sol1.var(i)] = tiempo;
+		// 			}else{
+		// 				tiempo = tiempo_empleado[sol1.var(i)];
+		// 				tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
+		// 				if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
+		// 					tiempo_empleado[sol1.var(i)] = tiempo;
+		// 				}else{
+		// 					end = true;
+		// 					break;
+		// 				}
+		//
+		// 			}
+		// 		}
+		// 	}
+		// 	if(end){ //no hago el cruzamiento
+		// 		sol2.array_var()=aux;
+		// 		sol1.array_var()=aux2;
+		// 	}
+		// }
 
 
 
@@ -575,27 +602,27 @@ skeleton newGA
 	void Mutation::mutate(Solution& sol) const
 	{
 		if (rand01()<=probability[1]){
-	        int i = rand_int(0, sol.pbm().dimension() -1);
-					bool encontre = false;
-					int iter = 0;
-
-					while (! encontre && iter < 20){
-						int indice = rand_int(1,sol.pbm().cantidadempleados());
-						if (indice != sol.var(i)){
-							double tiempo_empleado = 0;
-							for (int j =0; j < sol.pbm().dimension(); j++){
-								if(sol.var(j)== indice && j != i){
-									tiempo_empleado += sol.pbm().gettiempotarea(j)/(0.5 +sol.pbm().gethabilidad(indice-1));
-								}
-							}
-							tiempo_empleado += sol.pbm().gettiempotarea(i)/(0.5 +sol.pbm().gethabilidad(indice-1));
-							if (sol.isValid(tiempo_empleado, sol.pbm().getdisponibilidad(indice-1), sol.pbm().limiteproyecto())){
-									sol.var(i)= indice;
-									encontre = true;
-							}
-						}
-						iter ++;
-					}
+	        // int i = rand_int(0, sol.pbm().dimension() -1);
+					// bool encontre = false;
+					// int iter = 0;
+					//
+					// while (! encontre && iter < 20){
+					// 	int indice = rand_int(1,sol.pbm().cantidadempleados());
+					// 	if (indice != sol.var(i)){
+					// 		double tiempo_empleado = 0;
+					// 		for (int j =0; j < sol.pbm().dimension(); j++){
+					// 			if(sol.var(j)== indice && j != i){
+					// 				tiempo_empleado += sol.pbm().gettiempotarea(j)/(0.5 +sol.pbm().gethabilidad(indice-1));
+					// 			}
+					// 		}
+					// 		tiempo_empleado += sol.pbm().gettiempotarea(i)/(0.5 +sol.pbm().gethabilidad(indice-1));
+					// 		if (sol.isValid(tiempo_empleado, sol.pbm().getdisponibilidad(indice-1), sol.pbm().limiteproyecto())){
+					// 				sol.var(i)= indice;
+					// 				encontre = true;
+					// 		}
+					// 	}
+					// 	iter ++;
+					// }
 	    }
 	}
 
