@@ -74,14 +74,24 @@ skeleton newGA
     int getLargoMapa() const;
     int getAnchoMapa() const;
     int& getValorPosicionMapa(int largo, int ancho) const;
+    int explorarZona(int largo, int ancho);
+    int realizarMovimiento(int vehiculo);
+    bool isObstacle(int largo, int ancho) const;
+    bool isLoadZone(int largo, int ancho) const;
+    bool isAlreadyExplored(int largo, int ancho) const;
+    bool objetivoCumplido() const;
 	private:
 
 		int _dimension;
     int * _autonomia_vehiculo;
+    int * _movimientos_restantes_vehiculo;
     int _cantidad_vehiculos;
     int _largo_mapa;
     int _ancho_mapa;
     int ** _mapa;
+    int ** _mapa_explorado;
+    int _cantidad_zonas;
+    int _total_explorado;
 
   };
 

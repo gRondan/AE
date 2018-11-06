@@ -37,7 +37,6 @@ skeleton newGA
 		//cantidad vehiculos
 		getline(readFile,line	);
 		stringstream iss(line);
-		// while (getline(iss,subline, ' ')){
 		getline(iss,subline, ' ');
 		int n = subline.length();
 		char char_array[n+1];
@@ -45,12 +44,12 @@ skeleton newGA
 		pbm._dimension = atoi(char_array);
 		pbm._cantidad_vehiculos = pbm._dimension;
 		pbm._autonomia_vehiculo = new int[pbm._cantidad_vehiculos];
-		// }
+		pbm._movimientos_restantes_vehiculo = new int[pbm._cantidad_vehiculos];
+		pbm._total_explorado = 0;
 		// mapa _largo
 		getline(readFile,line	);
 		stringstream iss2(line);
 		getline(iss2,subline, ' ');
-		// while (getline(iss,subline, ' ')){
 		n = subline.length();
 		char_array[n+1];
 		strcpy(char_array, subline.c_str());
@@ -59,14 +58,15 @@ skeleton newGA
 		getline(readFile,line	);
 		stringstream iss3(line);
 		getline(iss3,subline, ' ');
-		// while (getline(iss,subline, ' ')){
 		n = subline.length();
 		char_array[n+1];
 		strcpy(char_array, subline.c_str());
 		pbm._ancho_mapa = atoi(char_array);
 		pbm._mapa = new int*[pbm._largo_mapa];
+		pbm._mapa_explorado = new int*[pbm._largo_mapa];
 		for (int l = 0; l < pbm._largo_mapa; l++) {
 			pbm._mapa[l] = new int[pbm._ancho_mapa];
+			pbm._mapa_explorado[l] = new int[pbm._ancho_mapa];
 		}
 		//autonomia
 		getline(readFile,line	);
@@ -77,10 +77,12 @@ skeleton newGA
 			char_array[n+1];
 			strcpy(char_array, subline.c_str());
 			pbm._autonomia_vehiculo[iterVehiculo] = atoi(char_array);
+			pbm._movimientos_restantes_vehiculo[iterVehiculo] = atoi(char_array);
 			iterVehiculo ++;
 		}
 		//matriz
 		int fila = 0;
+		pbm._cantidad_zonas =0;
 		while(getline(readFile,line	))   {
 			stringstream iss5(line);
 			int columna = 0;
@@ -88,7 +90,12 @@ skeleton newGA
 				n = subline.length();
 				char_array[n+1];
 				strcpy(char_array, subline.c_str());
-				pbm._mapa[fila][columna] = atoi(char_array);
+				int tipo_zona = atoi(char_array);
+				if (tipo_zona > 0){
+					pbm._cantidad_zonas ++;
+				}
+				pbm._mapa[fila][columna] = tipo_zona;
+				pbm._mapa_explorado[fila][columna] = 0;
 				columna ++;
 			}
 			fila ++;
@@ -169,8 +176,40 @@ skeleton newGA
 		return _mapa[largo][ancho];
 	}
 
+	int Problem::realizarMovimiento(int vehiculo)
+	{
+		_movimientos_restantes_vehiculo[vehiculo] -=1;
+		return _movimientos_restantes_vehiculo[vehiculo];
+	}
 
+	int Problem::explorarZona(int largo,int ancho)
+	{
+		if (_mapa_explorado[largo][ancho] == 0){
+			_total_explorado ++;
+		}
+		_mapa_explorado[largo][ancho] +=1;
+		return _mapa_explorado[largo][ancho];
+	}
 
+	bool Problem::isLoadZone(int largo,int ancho) const
+	{
+		return (_mapa[largo][ancho] == 2);
+	}
+
+	bool Problem::isObstacle(int largo,int ancho) const
+	{
+		return (_mapa[largo][ancho] == 0);
+	}
+
+	bool Problem::isAlreadyExplored(int largo,int ancho) const
+	{
+		return (_mapa_explorado[largo][ancho] > 0);
+	}
+
+	bool Problem::objetivoCumplido() const
+	{
+		return (_cantidad_zonas / _total_explorado >= 90);
+	}
 
 	Problem::~Problem()
 	{
@@ -257,7 +296,6 @@ skeleton newGA
 		// 	}
 		//
 		// }
-
 
 
 	}
