@@ -5,10 +5,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <iostream>
-	#include <regex>
-	#include <boost/regex.hpp>
+#include <regex>
+#include <boost/regex.hpp>
+#include <tuple>
+#include <vector>
 
 using namespace std;
+
+typedef vector< tuple<int,int> > tupleList;
 
 skeleton newGA
 {
@@ -44,8 +48,7 @@ skeleton newGA
 		pbm._dimension = atoi(char_array);
 		pbm._cantidad_vehiculos = pbm._dimension;
 		pbm._autonomia_vehiculo = new int[pbm._cantidad_vehiculos];
-		pbm._movimientos_restantes_vehiculo = new int[pbm._cantidad_vehiculos];
-		pbm._total_explorado = 0;
+
 		// mapa _largo
 		getline(readFile,line	);
 		stringstream iss2(line);
@@ -63,10 +66,8 @@ skeleton newGA
 		strcpy(char_array, subline.c_str());
 		pbm._ancho_mapa = atoi(char_array);
 		pbm._mapa = new int*[pbm._largo_mapa];
-		pbm._mapa_explorado = new int*[pbm._largo_mapa];
 		for (int l = 0; l < pbm._largo_mapa; l++) {
 			pbm._mapa[l] = new int[pbm._ancho_mapa];
-			pbm._mapa_explorado[l] = new int[pbm._ancho_mapa];
 		}
 		//autonomia
 		getline(readFile,line	);
@@ -77,7 +78,6 @@ skeleton newGA
 			char_array[n+1];
 			strcpy(char_array, subline.c_str());
 			pbm._autonomia_vehiculo[iterVehiculo] = atoi(char_array);
-			pbm._movimientos_restantes_vehiculo[iterVehiculo] = atoi(char_array);
 			iterVehiculo ++;
 		}
 		//matriz
@@ -91,11 +91,12 @@ skeleton newGA
 				char_array[n+1];
 				strcpy(char_array, subline.c_str());
 				int tipo_zona = atoi(char_array);
+				printf("d\n", tipo_zona);
 				if (tipo_zona > 0){
 					pbm._cantidad_zonas ++;
+					printf("d\n", pbm._cantidad_zonas);
 				}
 				pbm._mapa[fila][columna] = tipo_zona;
-				pbm._mapa_explorado[fila][columna] = 0;
 				columna ++;
 			}
 			fila ++;
@@ -176,24 +177,9 @@ skeleton newGA
 		return _mapa[largo][ancho];
 	}
 
-	int Problem::realizarMovimiento(int vehiculo)
-	{
-		_movimientos_restantes_vehiculo[vehiculo] -=1;
-		return _movimientos_restantes_vehiculo[vehiculo];
-	}
-
-	int Problem::explorarZona(int largo,int ancho)
-	{
-		if (_mapa_explorado[largo][ancho] == 0){
-			_total_explorado ++;
-		}
-		_mapa_explorado[largo][ancho] +=1;
-		return _mapa_explorado[largo][ancho];
-	}
-
 	bool Problem::isLoadZone(int largo,int ancho) const
 	{
-		return (_mapa[largo][ancho] == 2);
+		return (_mapa[largo][ancho] == 2 || isBasePosition(largo, ancho));
 	}
 
 	bool Problem::isObstacle(int largo,int ancho) const
@@ -201,15 +187,19 @@ skeleton newGA
 		return (_mapa[largo][ancho] == 0);
 	}
 
-	bool Problem::isAlreadyExplored(int largo,int ancho) const
-	{
-		return (_mapa_explorado[largo][ancho] > 0);
+	bool Problem::isExplorable(int largo, int ancho)const{
+		return(largo >= 0 && ancho >= 0 && largo < _largo_mapa && ancho < _ancho_mapa && !isObstacle(largo, ancho));
 	}
 
-	bool Problem::objetivoCumplido() const
-	{
-		return (_cantidad_zonas / _total_explorado >= 90);
+	int Problem::getCantidadZonas()const{
+		printf("%d\n",_cantidad_zonas);
+		return _cantidad_zonas;
 	}
+
+	bool Problem::isBasePosition(int largo, int ancho) const {
+		return (largo == 0 && ancho == 0);
+	}
+
 
 	Problem::~Problem()
 	{
@@ -278,55 +268,195 @@ skeleton newGA
 
 	void Solution::initialize()
 	{
-		// double tiempo_empleado[_pbm.cantidadempleados()+1];
-		// for (int k=1;k<=_pbm.cantidadempleados();k++){
-		// 	tiempo_empleado[k] = 0.0;
-		// }
-		// for (int i=0;i<_pbm.dimension();i++){
-		// 	bool encontre = false;
-		// 	while (! encontre){
-		// 		int indice = rand_int(1,_pbm.cantidadempleados());
-		// 		double aux = tiempo_empleado[indice];
-		// 		aux += _pbm.gettiempotarea(i)/(0.5 +_pbm.gethabilidad(indice-1));
-		// 		if (isValid(aux, _pbm.getdisponibilidad(indice-1), _pbm.limiteproyecto())){
-		// 				_var[i]= indice;
-		// 				tiempo_empleado[indice] = aux;
-		// 				encontre = true;
-		// 		}
-		// 	}
-		//
-		// }
+		printf("%s\n", "entra initialize");
+		//inicializo atributos de la solucion
+		_movimientos_restantes_vehiculo = new int[_pbm.getCantidadVehiculos()];
+		for(int k = 0; k<_pbm.getCantidadVehiculos();k++){
+			_movimientos_restantes_vehiculo[k] = _pbm.getAutonomiaVehiculo(k);
+		}
+		printf("%s\n", "pasa");
+		_total_explorado = 0;
+		_mapa_explorado = new int*[_pbm.getLargoMapa()];
+		for (int l = 0; l < _pbm.getLargoMapa(); l++) {
+			_mapa_explorado[l] = new int[_pbm.getAnchoMapa()];
+		}
+		printf("%s\n", "pasa2");
+		for(int i = 0; i < _pbm.getLargoMapa(); i++){
+			for(int j = 0; j < _pbm.getAnchoMapa(); j++){
+				_mapa_explorado[i][j] = 0;
+			}
+		}
+		printf("%s\n", "pasa3");
 
+		//construyo los camino
+		//la solucion testa compuesta con una lista que representa cada vehiculo donde cada elemento de la lista es una lista con las zonas del camino
+		while(!objetivoCumplido()){
+
+				printf("%s\n", "entraWhilePrincipal");
+			for (int i = 0; i < _pbm.getCantidadVehiculos(); i ++){
+
+					printf("%s\n", "call construirCamino");
+				tupleList camino = construirCamino(i);
+				printf("%s\n", "end construirCamino");
+				caminos.emplace_back(camino);
+				if(objetivoCumplido()){
+					break;
+				}
+			}
+		}
+printf("%s", "caminos size");
+printf("%d\n", caminos.size());
+	for (int k=0; k<_var.size(); k++){
+		_var[k] = 0;
+	}
+// 		//seteo los largos en la tupla solucion
+		for (int i=0;i<caminos.size();i++){
+			// var[i] = caminos[i].size();
+			int iterVar = (i % 3);
+			tupleList cam = caminos[i];
+			_var[iterVar] += cam.size();
+			// printf("%s\n", "cam.size()");
+			// printf("%d\n", cam.size());
+			// for (int j = 0; j<cam.size(); j++){
+			// 	printf("%d", get<0>(cam[j]));
+			// 	printf("%d\n", get<1>(cam[j]));
+			// }
+		}
+	}
+
+
+	tupleList Solution::construirCamino(int vehiculo){
+		printf("%s\n", "construirCamino");
+		tupleList camino;
+		// camino.emplace_back(0,0);
+		bool finCamino = false;
+		int largo = 0;
+		int ancho = 0;
+		bool retorno = false;
+		while(! finCamino && !objetivoCumplido()){
+			// printf("%s\n", "entra while");
+			if(! retorno){
+
+				int nuevoLargo = (rand() % 3) - 1;
+				int nuevoAncho = (rand() % 3) - 1;
+				// printf("%s", "nuevoLargo ");
+				// printf("%d\n", nuevoLargo );
+				// printf("%s", "nuevoAncho ");
+				// printf("%d\n", nuevoAncho );
+				//
+				// printf("%s", "largo ");
+				// printf("%d\n", largo );
+				// printf("%s", "ancho ");
+				// printf("%d\n", ancho );
+				nuevoLargo = largo + nuevoLargo;
+				nuevoAncho = ancho + nuevoAncho;
+				if (_pbm.isExplorable(nuevoLargo, nuevoAncho)){
+					largo = nuevoLargo;
+					ancho = nuevoAncho;
+					explorarZona(largo, ancho, vehiculo);
+					// camino.emplace_back(largo, ancho);
+				}
+			}else{ //estoy volviendo a la base , FALTA ESQUIVAR OBSTACULOS
+
+				printf("%s\n", "entra else");
+				if (largo != 0){
+
+					largo = largo -1;
+				}
+				if (ancho != 0){
+					ancho = ancho -1;
+				}
+				explorarZona(largo, ancho, vehiculo);
+
+			}
+			if (_pbm.isBasePosition(largo, ancho)){
+				finCamino = true;
+			}else{
+				camino.emplace_back(largo, ancho);
+				retorno = deboVolver(largo, ancho, vehiculo);
+			}
+
+		}
+		printf("%s\n", "fin camino");
+		return camino;
 
 	}
 
-	// bool Solution::isValid(double coef, int disponibilidad_empleado, int limite_proyecto){
-	// 	double cantidad_dias_empleado = coef/disponibilidad_empleado;
-	// 	double limite_proyecto_double = limite_proyecto * 1.0;
-	// 	return (limite_proyecto_double >= cantidad_dias_empleado);
-	// 	// return (limite_proyecto >= (int) ceil(cantidad_dias_empleado));
-	// }
-
-	double Solution::fitness ()
+	bool Solution::objetivoCumplido() const
 	{
-    // double fitness = 0.0;
-		// double tiempo_total = 0.0;
-		// int limite_proyecto = _pbm.limiteproyecto();
-		// double tiempo_empleado[_pbm.cantidadempleados()+1];
-		// for (int k=1;k<=_pbm.cantidadempleados();k++){
-		// 	tiempo_empleado[k] = 0.0;
-		// }
-		// for (int i=0;i<_var.size();i++){//recorro tupla solucion(tareas)
-		// 	int indice = _var[i]; //Indice de empleado
-		// 	tiempo_empleado[indice] += _pbm.gettiempotarea(i)/(0.5 +_pbm.gethabilidad(indice-1));
-		// }
-		// for(int j=1;j<=_pbm.cantidadempleados();j++){
-		// 	int disponibilidad_empleado = _pbm.getdisponibilidad(j-1);
-		// 	int sueldo_empleado = _pbm.getsueldo(j-1);
-		// 	double cantidad_dias_empleado = tiempo_empleado[j]/disponibilidad_empleado;
-		// 	fitness +=(int) ceil(cantidad_dias_empleado) * sueldo_empleado;
-		// }
-		// return fitness;
+		printf("%s\n", "total");
+		printf("%d\n", _total_explorado);
+		printf("%s\n", "zonas");
+		printf("%d\n", _pbm.getCantidadZonas());
+		if(_total_explorado == 0 ){
+			return false;
+		}else{
+			float porcentaje = ((double)_total_explorado / _pbm.getCantidadZonas());
+			printf("%s", "aaaaaaaaa ");
+			printf("%f\n", porcentaje);
+			if (porcentaje >= 0.9){
+				return true;
+			} else{
+				return false;
+			}
+		}
+	}
+
+	bool Solution::deboVolver(int largo, int ancho, int vehiculo){
+		//si la cantidad de movimientos que debo realizar para volver a la base es igual a mi autonomia vuelvo
+
+			// printf("%s\n", "deboVolver");
+		bool finCamino = false;
+		int distancia = largo;
+		if (distancia > ancho){
+			distancia = ancho;
+		}
+		// printf("%s", "distancia ");
+		// printf("%d\n", distancia );
+		// printf("%s", "vehiculo ");
+		// printf("%d\n", vehiculo );
+		// printf("%s", "autonomia ");
+		// printf("%d\n", _movimientos_restantes_vehiculo[vehiculo]);
+
+		if (distancia >= _movimientos_restantes_vehiculo[vehiculo]+1){
+			finCamino =true;
+		}
+
+			// printf("%s\n", "findebovolver");
+		return finCamino;
+	}
+
+	int Solution::explorarZona(int largo,int ancho, int vehiculo)
+	{
+		if (_mapa_explorado[largo][ancho] == 0){
+			_total_explorado ++;
+		}
+		_mapa_explorado[largo][ancho] +=1;
+		_movimientos_restantes_vehiculo[vehiculo] -=1;
+		if(_pbm.isLoadZone(largo, ancho)){
+			_movimientos_restantes_vehiculo[vehiculo] = _pbm.getAutonomiaVehiculo(vehiculo);
+		}
+		return _mapa_explorado[largo][ancho];
+	}
+
+	bool Solution::isAlreadyExplored(int largo,int ancho) const
+	{
+		return (_mapa_explorado[largo][ancho] > 0);
+	}
+
+	double Solution::fitness()
+	{
+		//recorremos cada camino y nos quedamos con el mas _largo
+		int caminoMasLargo = 0;
+		int largoMasLargo = _var[0];
+		for (int i=1;i<_var.size();i++){//recorro tupla solucion(tareas)
+			int largo = _var[i];
+			if(largo > largoMasLargo){
+				largoMasLargo = largo;
+				caminoMasLargo = i;
+			}
+		}
+		return largoMasLargo;
 	}
 
 	char *Solution::to_String() const

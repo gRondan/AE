@@ -16,6 +16,10 @@
 #include <stdlib.h>
 #include <regex>
 
+typedef vector< tuple<int,int> > tupleList;
+
+
+
 skeleton newGA
 {
 // Si se definen m�s de 5 nuevos operadores por parte del usuario, se debe cambiar esta constante.
@@ -74,24 +78,20 @@ skeleton newGA
     int getLargoMapa() const;
     int getAnchoMapa() const;
     int& getValorPosicionMapa(int largo, int ancho) const;
-    int explorarZona(int largo, int ancho);
-    int realizarMovimiento(int vehiculo);
     bool isObstacle(int largo, int ancho) const;
+    bool isExplorable(int largo, int ancho) const;
     bool isLoadZone(int largo, int ancho) const;
-    bool isAlreadyExplored(int largo, int ancho) const;
-    bool objetivoCumplido() const;
+    int getCantidadZonas() const;
+    bool isBasePosition(int largo, int ancho)const;
 	private:
 
 		int _dimension;
     int * _autonomia_vehiculo;
-    int * _movimientos_restantes_vehiculo;
     int _cantidad_vehiculos;
     int _largo_mapa;
     int _ancho_mapa;
     int ** _mapa;
-    int ** _mapa_explorado;
     int _cantidad_zonas;
-    int _total_explorado;
 
   };
 
@@ -119,16 +119,24 @@ skeleton newGA
 		void to_Solution(char *_cadena_);
 
 		void initialize();
-    bool isValid(double coef, int disponibilidad_empleado, int limite_proyecto);
+    bool deboVolver(int largo, int ancho, int vehiculo);
+    int explorarZona(int largo, int ancho, int vehiculo);
+    bool isAlreadyExplored(int largo, int ancho) const;
 		double fitness ();
-		unsigned int size() const;
+    tupleList construirCamino(int vehiculo);
+    bool objetivoCumplido() const;
+    unsigned int size() const;
 
 		int& var(const int index);
 		Rarray<int>& array_var();
 
 	private:
 		Rarray<int> _var;
+    vector<tupleList> caminos;
 		const Problem& _pbm;
+    int * _movimientos_restantes_vehiculo;
+    int ** _mapa_explorado;
+    int _total_explorado;
   };
 
 // UserStatistics ----------------------------------------------------------------------------
