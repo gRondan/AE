@@ -6,10 +6,13 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-int main ()
+int main (int argc, char **argv)
 {
 	using skeleton newGA;
-
+	char* ret = argv[1];
+	char* newGA = argv[2];
+	// printf("%s\n", ret);
+	// printf("%s\n", newGA);
 	// system("clear");
 
     float probabilidad_cruzamiento[3];
@@ -47,20 +50,21 @@ int main ()
   // archivo_salida.open("salida.txt");
 	csv.open("salida.csv",  fstream::app);
 
-	ifstream f3("newGA.cfg");
+	ifstream f3(newGA);
 	f3 >> cfg;
 	f3.close();
-  for(int instancia = 1; instancia <= 5; instancia++){
-			const char* nombre_instancia_const = "instancias/instancia_";
-			char integer_string[32];
-			sprintf(integer_string, "%d", instancia);
-			size_t len = strlen(nombre_instancia_const);
-
-		  char* ret = new char[len+2];
-
-		  strcpy(ret, nombre_instancia_const);
-		  ret[len] = integer_string[0];
-		  ret[len+1] = '\0';
+  // for(int instancia = 1; instancia <= 5; instancia++){
+			// int instancia = 1;
+			// const char* nombre_instancia_const = "instancias/instancia_";
+			// char integer_string[32];
+			// sprintf(integer_string, "%d", instancia);
+			// size_t len = strlen(nombre_instancia_const);
+			//
+		  // char* ret = new char[len+2];
+			//
+		  // strcpy(ret, nombre_instancia_const);
+		  // ret[len] = integer_string[0];
+		  // ret[len+1] = '\0';
 			pbm.loadInstance(pbm, ret);
       // for(int mutacion = 0; mutacion < 1; mutacion++){
       //     for(int cruzamiento = 0; cruzamiento < 1; cruzamiento++){
@@ -88,14 +92,14 @@ int main ()
 									// 		"1 // interval of generations to check solutions from other populations";
 								 //      archivo_config.close();
 
-											for(int corrida = 1; corrida <= 40; corrida++){
-												Solver_Seq solver(pbm,cfg);
-									      solver.run();
+											for(int corrida = 1; corrida <= 10; corrida++){
+												Solver_Seq* solver = new Solver_Seq(pbm,cfg);
+									      solver->run();
 
-									      if (solver.pid()==0){
-                            solver.show_state();
+									      if (solver->pid()==0){
+                            // solver->show_state();
                             // archivo_salida << "Corrida: " << corrida;
-														csv << instancia << ";" <<solver.global_best_solution().fitness() << ";" << solver.iteration_best_found() << ";" << solver.time_best_found() << endl;
+														csv << ret << ";" << newGA << ";"<<solver->global_best_solution().fitness() << ";" << solver->iteration_best_found() << ";" << solver->time_best_found() << endl;
                             // archivo_salida << " Mejor Fitness: " << solver.global_best_solution().fitness() << endl;
                             // archivo_salida << " Iteracion Mejor Fitness: " << solver.iteration_best_found() << endl;
                             // archivo_salida << " Tiempo para encontrar mejor solucion: " << solver.time_best_found() << endl;
@@ -113,13 +117,15 @@ int main ()
                         //     // archivo_salida << " Tiempo para encontrar mejor solucion: " << solver.time_best_found() << endl;
                         //     // archivo_salida << "**********************************************************";
                         // }
+												delete solver;
 											}
+
 
                 // }
       //         }
       //     }
       // }
-  }
+  // }
   // archivo_salida.close();
 	csv.close();
 	return(0);

@@ -99,7 +99,7 @@ skeleton newGA
 			}
 			fila ++;
 		}
-		readFile.close();
+
 		//log
 		// printf("%s", "dimension: ");
 		// printf("%d\n", pbm._dimension);
@@ -492,7 +492,7 @@ skeleton newGA
 
 
 
-			}else{ //estoy volviendo a la base , FALTA ESQUIVAR OBSTACULOS
+			}else{ //estoy volviendo a la base
 
 				if (largo != 0){
 

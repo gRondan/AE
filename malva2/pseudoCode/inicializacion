@@ -1,0 +1,11 @@
+begin{
+  iniciarVariables
+  mientras noEsSolucion{
+    para cada vehiculo{
+      construirCaminoAleatorio
+      si caminoAleatorioNoMejoraSolucion{
+        construirCaminoGreedy
+      }
+    }
+  }
+}
