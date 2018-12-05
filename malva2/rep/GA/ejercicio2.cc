@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	{
 		solver.show_state();
 		cout << "Solution: " << solver.global_best_solution()
+    << "Interation best found: " << solver.iteration_best_found()
 		     << " Fitness: " << solver.global_best_solution().fitness() << endl;
 		cout << "\n\n :( ---------------------- THE END --------------- :) ";
 

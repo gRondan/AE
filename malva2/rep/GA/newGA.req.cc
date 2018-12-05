@@ -45,9 +45,9 @@ skeleton newGA
 		int n = subline.length();
 		char char_array[n+1];
 		strcpy(char_array, subline.c_str());
-		pbm._dimension = atoi(char_array);
-		pbm._cantidad_vehiculos = pbm._dimension;
-		pbm._autonomia_vehiculo = new int[pbm._cantidad_vehiculos];
+		pbm._dimension = 10000;
+		pbm._cantidad_vehiculos = atoi(char_array);
+		pbm._autonomia_vehiculo = new int[atoi(char_array)];
 
 		// mapa _largo
 		getline(readFile,line	);
@@ -91,10 +91,8 @@ skeleton newGA
 				char_array[n+1];
 				strcpy(char_array, subline.c_str());
 				int tipo_zona = atoi(char_array);
-				printf("d\n", tipo_zona);
 				if (tipo_zona > 0){
 					pbm._cantidad_zonas ++;
-					printf("d\n", pbm._cantidad_zonas);
 				}
 				pbm._mapa[fila][columna] = tipo_zona;
 				columna ++;
@@ -103,27 +101,27 @@ skeleton newGA
 		}
 
 		//log
-		printf("%s", "dimension: ");
-		printf("%d\n", pbm._dimension);
-		printf("%s", "_cantidad_vehiculos: ");
-		printf("%d\n", pbm._cantidad_vehiculos);
-		printf("%s", "_largo_mapa: ");
-		printf("%d\n", pbm._largo_mapa);
-		printf("%s", "_ancho_mapa: ");
-		printf("%d\n", pbm._ancho_mapa);
-		printf("%s", "autonomia: ");
-		for(int i = 0; i < pbm._cantidad_vehiculos; i++){
-			printf("%d-", pbm._autonomia_vehiculo[i]);
-		}
-		printf("%s\n", "");
-		printf("%s\n", "matriz: ");
-		for(int j = 0; j < pbm._largo_mapa; j++){
-			for(int k = 0; k < pbm._ancho_mapa; k++){
-				printf("%d-", (pbm._mapa[j][k]));
-			}
-			printf("%s\n", "");
-		}
-		printf("%s\n", "");
+		// printf("%s", "dimension: ");
+		// printf("%d\n", pbm._dimension);
+		// printf("%s", "_cantidad_vehiculos: ");
+		// printf("%d\n", pbm._cantidad_vehiculos);
+		// printf("%s", "_largo_mapa: ");
+		// printf("%d\n", pbm._largo_mapa);
+		// printf("%s", "_ancho_mapa: ");
+		// printf("%d\n", pbm._ancho_mapa);
+		// printf("%s", "autonomia: ");
+		// for(int i = 0; i < pbm._cantidad_vehiculos; i++){
+		// 	printf("%d-", pbm._autonomia_vehiculo[i]);
+		// }
+		// printf("%s\n", "");
+		// printf("%s\n", "matriz: ");
+		// for(int j = 0; j < pbm._largo_mapa; j++){
+		// 	for(int k = 0; k < pbm._ancho_mapa; k++){
+		// 		printf("%d-", (pbm._mapa[j][k]));
+		// 	}
+		// 	printf("%s\n", "");
+		// }
+		// printf("%s\n", "");
 
 		return 0;
 	}
@@ -192,7 +190,6 @@ skeleton newGA
 	}
 
 	int Problem::getCantidadZonas()const{
-		printf("%d\n",_cantidad_zonas);
 		return _cantidad_zonas;
 	}
 
@@ -261,104 +258,242 @@ skeleton newGA
 		return true;
 	}
 
+	vector<tupleList> Solution::getCaminos(){
+		return caminos;
+	}
+
+	void Solution:: setCaminos(vector<tupleList> caminos2){
+		caminos.swap(caminos2);
+	}
+
 	bool Solution::operator!= (const Solution& sol) const
 	{
 		return !(*this == sol);
 	}
 
+	int Solution:: total_explorado(){
+		return _total_explorado;
+	}
+
 	void Solution::initialize()
 	{
-		printf("%s\n", "entra initialize");
 		//inicializo atributos de la solucion
+
+		// printf("%s\n", "initialize");
+		// printf("%d\n", _total_explorado);
+		// printf("%d\n", caminos.size());
+
+		std::vector<tupleList>().swap(caminos);
 		_movimientos_restantes_vehiculo = new int[_pbm.getCantidadVehiculos()];
 		for(int k = 0; k<_pbm.getCantidadVehiculos();k++){
 			_movimientos_restantes_vehiculo[k] = _pbm.getAutonomiaVehiculo(k);
 		}
-		printf("%s\n", "pasa");
+		initializeMapaExplorado();
+
+		//construyo los camino
+		//la solucion testa compuesta con una lista que representa cada vehiculo donde cada elemento de la lista es una lista con las zonas del camino
+		bool greedy = false;
+		while(!objetivoCumplido()){
+			for (int i = 0; i < _pbm.getCantidadVehiculos(); i ++){
+				int totalExploradoInicial = _total_explorado;
+				tupleList camino = construirCamino(i, greedy);
+
+				// for(int j = 0; j < camino.size(); j++){
+				// 	printf("%d-", get<0>(camino[j]));
+				// 	printf("%d\n", get<1>(camino[j]));
+				// }
+				// printf("%s\n", "finCamino");
+				if((camino.size() > 0) && (totalExploradoInicial < _total_explorado)){
+
+					caminos.emplace_back(camino);
+					std::vector<tuple<int,int>>().swap(camino);
+					if(objetivoCumplido()){
+						break;
+					}
+					greedy = false;
+				}else{
+					greedy = true;
+				}
+
+			}
+		}
+		convertCaminosToVar();
+		std::vector<tupleList>().swap(caminos);
+	}
+
+	void Solution::initializeMapaExplorado(){
 		_total_explorado = 0;
 		_mapa_explorado = new int*[_pbm.getLargoMapa()];
 		for (int l = 0; l < _pbm.getLargoMapa(); l++) {
 			_mapa_explorado[l] = new int[_pbm.getAnchoMapa()];
 		}
-		printf("%s\n", "pasa2");
 		for(int i = 0; i < _pbm.getLargoMapa(); i++){
 			for(int j = 0; j < _pbm.getAnchoMapa(); j++){
 				_mapa_explorado[i][j] = 0;
 			}
 		}
-		printf("%s\n", "pasa3");
+	}
 
-		//construyo los camino
-		//la solucion testa compuesta con una lista que representa cada vehiculo donde cada elemento de la lista es una lista con las zonas del camino
-		while(!objetivoCumplido()){
+	void Solution::convertCaminosToVar(){
 
-				printf("%s\n", "entraWhilePrincipal");
-			for (int i = 0; i < _pbm.getCantidadVehiculos(); i ++){
-
-					printf("%s\n", "call construirCamino");
-				tupleList camino = construirCamino(i);
-				printf("%s\n", "end construirCamino");
-				caminos.emplace_back(camino);
-				if(objetivoCumplido()){
+			// printf("%s\n", "convertCaminosToVar");
+		int iterVar = 0;
+		bool caminoVacio = true;
+			for (int i=0;i<caminos.size();i++){
+				if(iterVar >= 9900){
 					break;
 				}
+				tupleList camino = caminos[i];
+				for(int j=0; j<camino.size(); j++){
+					caminoVacio = false;
+					if(iterVar >= 9900){
+						break;
+					}
+					tuple<int,int> zona = camino[j];
+					_var[iterVar] = get<0>(zona);
+					iterVar ++;
+					_var[iterVar] = get<1>(zona);6;
+					iterVar ++;
+				}
+			//marco fin camino
+			if(! caminoVacio){
+
+				_var[iterVar] = -1;
+				caminoVacio = true;
+				iterVar ++;
 			}
 		}
-printf("%s", "caminos size");
-printf("%d\n", caminos.size());
-	for (int k=0; k<_var.size(); k++){
-		_var[k] = 0;
+		//fin de valores validos
+		_var[iterVar] = -2;
+		_var[iterVar +1] = -2;
+		// for(int i = 0 ;i <_var.size(); i++){
+		// 		printf("%d-", _var[i]);
+		// }
+		std::vector<tupleList>().swap(caminos);
+		// printf("%s\n", "end convertCaminosToVar");
 	}
-// 		//seteo los largos en la tupla solucion
-		for (int i=0;i<caminos.size();i++){
-			// var[i] = caminos[i].size();
-			int iterVar = (i % 3);
-			tupleList cam = caminos[i];
-			_var[iterVar] += cam.size();
-			// printf("%s\n", "cam.size()");
-			// printf("%d\n", cam.size());
-			// for (int j = 0; j<cam.size(); j++){
-			// 	printf("%d", get<0>(cam[j]));
-			// 	printf("%d\n", get<1>(cam[j]));
-			// }
+
+	void Solution::convertVarToCaminos(){
+		// printf("%s\n", "convertVarToCaminos");
+		std::vector<tupleList>().swap(caminos);
+		tupleList camino;
+		bool caminoVacio = true;
+		int inc = 1;
+		for (int i=0;i<_var.size();i+=inc){
+			if (_var[i] == -2){
+				// fin de valores validos
+				break;
+			}
+			if(_var[i] == -1){
+				//fin del camino
+				if(!caminoVacio){
+
+					caminos.emplace_back(camino);
+					std::vector<tuple<int,int>>().swap(camino);
+				}
+				caminoVacio = true;
+				inc = 1;
+			}else{
+				caminoVacio = false;
+				camino.emplace_back(_var[i], _var[i+1]);
+				inc = 2;
+			}
+
 		}
+		// printf("%s\n", "end convertVarToCaminos");
 	}
 
+	bool Solution::cumpleObjetivo(){
+		// limpio el _mapa_explorado
+		initializeMapaExplorado();
+		//asigno los puntos explorados
+		// printf("%s","caminos size " );
+		// printf("%d\n", caminos.size());
+		for(int i = 0; i<caminos.size(); i++){
+			tupleList camino = caminos[i];
 
-	tupleList Solution::construirCamino(int vehiculo){
-		printf("%s\n", "construirCamino");
+			for(int j = 0; j<camino.size(); j++){
+				int largo = get<0>(camino[j]);
+				int ancho = get<1>(camino[j]);
+				if(_mapa_explorado[largo][ancho] == 0){
+
+					_total_explorado +=1;
+					if(objetivoCumplido()){
+						return true;
+					}
+				}
+				_mapa_explorado[largo][ancho] += 1;
+			}
+		}
+		return false;
+	}
+
+	tupleList Solution::construirCamino(int vehiculo, bool greedy){
+// printf("%s\n", "construirCamino");
+
+		_movimientos_restantes_vehiculo[vehiculo] = _pbm.getAutonomiaVehiculo(vehiculo);
+		// printf("%s", "_movimientos_restantes_vehiculo[vehiculo] ");
+		// printf("%d\n", _movimientos_restantes_vehiculo[vehiculo]);
+		// printf("%d\n", vehiculo);
 		tupleList camino;
 		// camino.emplace_back(0,0);
 		bool finCamino = false;
 		int largo = 0;
 		int ancho = 0;
+		_mapa_explorado[0][0] ++;
 		bool retorno = false;
-		while(! finCamino && !objetivoCumplido()){
-			// printf("%s\n", "entra while");
-			if(! retorno){
+		bool first = true;
+		while(! finCamino ){
+			if(! retorno && !objetivoCumplido()){
+				if (greedy){
+					int minimo = 999999999;
+					int mejorLargo = largo + 1;
+					int mejorAncho = ancho + 1;
+					for(int i = -1; i<2; i++){
+						for(int j = -1; j <2; j++){
+							int nuevoLargo = largo + i;
+							int nuevoAncho = ancho + j;
+							if ((!((i == j) && (i == 0))) && _pbm.isExplorable(nuevoLargo, nuevoAncho)){
+								if ( (_mapa_explorado[nuevoLargo][nuevoAncho] < minimo)){
+									minimo = _mapa_explorado[nuevoLargo][nuevoAncho];
+									mejorLargo = nuevoLargo;
+									mejorAncho = nuevoAncho;
+								}
+							}
 
-				int nuevoLargo = (rand() % 3) - 1;
-				int nuevoAncho = (rand() % 3) - 1;
-				// printf("%s", "nuevoLargo ");
-				// printf("%d\n", nuevoLargo );
-				// printf("%s", "nuevoAncho ");
-				// printf("%d\n", nuevoAncho );
-				//
-				// printf("%s", "largo ");
-				// printf("%d\n", largo );
-				// printf("%s", "ancho ");
-				// printf("%d\n", ancho );
-				nuevoLargo = largo + nuevoLargo;
-				nuevoAncho = ancho + nuevoAncho;
-				if (_pbm.isExplorable(nuevoLargo, nuevoAncho)){
-					largo = nuevoLargo;
-					ancho = nuevoAncho;
+
+						}
+					}
+					largo = mejorLargo;
+					ancho = mejorAncho;
 					explorarZona(largo, ancho, vehiculo);
-					// camino.emplace_back(largo, ancho);
+					first = false;
+						// camino.emplace_back(largo, ancho);
+				}else{
+					bool encontreLugar = false;
+					while(! encontreLugar){
+						int nuevoLargo = (rand() % 3) - 1;
+						int nuevoAncho = (rand() % 3) - 1;
+						nuevoLargo = largo + nuevoLargo;
+						nuevoAncho = ancho + nuevoAncho;
+						if (_pbm.isExplorable(nuevoLargo, nuevoAncho)){
+							encontreLugar = true;
+							largo = nuevoLargo;
+							ancho = nuevoAncho;
+							first = false;
+							explorarZona(largo, ancho, vehiculo);
+							// camino.emplace_back(largo, ancho);
+						}
+					}
+
 				}
+
+
+
+
+
 			}else{ //estoy volviendo a la base , FALTA ESQUIVAR OBSTACULOS
 
-				printf("%s\n", "entra else");
 				if (largo != 0){
 
 					largo = largo -1;
@@ -369,32 +504,29 @@ printf("%d\n", caminos.size());
 				explorarZona(largo, ancho, vehiculo);
 
 			}
-			if (_pbm.isBasePosition(largo, ancho)){
+			if (!first && _pbm.isBasePosition(largo, ancho)){
+				// printf("%s\n", "isBasePosition");
 				finCamino = true;
-			}else{
-				camino.emplace_back(largo, ancho);
-				retorno = deboVolver(largo, ancho, vehiculo);
 			}
+			camino.emplace_back(largo, ancho);
+			retorno = deboVolver(largo, ancho, vehiculo);
+
 
 		}
-		printf("%s\n", "fin camino");
 		return camino;
 
 	}
 
 	bool Solution::objetivoCumplido() const
 	{
-		printf("%s\n", "total");
-		printf("%d\n", _total_explorado);
-		printf("%s\n", "zonas");
-		printf("%d\n", _pbm.getCantidadZonas());
 		if(_total_explorado == 0 ){
+			// printf("%s\n", "es 0");
 			return false;
 		}else{
 			float porcentaje = ((double)_total_explorado / _pbm.getCantidadZonas());
-			printf("%s", "aaaaaaaaa ");
-			printf("%f\n", porcentaje);
-			if (porcentaje >= 0.9){
+			// printf("%s", "porcentaje ");
+			// printf("%f\n", porcentaje);
+			if (porcentaje >= 0.8){
 				return true;
 			} else{
 				return false;
@@ -404,32 +536,26 @@ printf("%d\n", caminos.size());
 
 	bool Solution::deboVolver(int largo, int ancho, int vehiculo){
 		//si la cantidad de movimientos que debo realizar para volver a la base es igual a mi autonomia vuelvo
-
-			// printf("%s\n", "deboVolver");
 		bool finCamino = false;
 		int distancia = largo;
 		if (distancia > ancho){
 			distancia = ancho;
 		}
-		// printf("%s", "distancia ");
-		// printf("%d\n", distancia );
-		// printf("%s", "vehiculo ");
-		// printf("%d\n", vehiculo );
-		// printf("%s", "autonomia ");
-		// printf("%d\n", _movimientos_restantes_vehiculo[vehiculo]);
-
 		if (distancia >= _movimientos_restantes_vehiculo[vehiculo]+1){
 			finCamino =true;
 		}
-
-			// printf("%s\n", "findebovolver");
 		return finCamino;
 	}
 
+
 	int Solution::explorarZona(int largo,int ancho, int vehiculo)
 	{
+		// printf("%d\n", largo);
+		// printf("%d\n", ancho);
+		// printf("%d\n", _mapa_explorado[largo][ancho]);
 		if (_mapa_explorado[largo][ancho] == 0){
 			_total_explorado ++;
+			// printf("%s\n", "_total_explorado");
 		}
 		_mapa_explorado[largo][ancho] +=1;
 		_movimientos_restantes_vehiculo[vehiculo] -=1;
@@ -447,15 +573,35 @@ printf("%d\n", caminos.size());
 	double Solution::fitness()
 	{
 		//recorremos cada camino y nos quedamos con el mas _largo
-		int caminoMasLargo = 0;
-		int largoMasLargo = _var[0];
-		for (int i=1;i<_var.size();i++){//recorro tupla solucion(tareas)
-			int largo = _var[i];
-			if(largo > largoMasLargo){
-				largoMasLargo = largo;
-				caminoMasLargo = i;
+		int iterVehiculos = 0;
+		int* largosCaminos = new int[_pbm.getCantidadVehiculos()];
+		for(int j=0; j < _pbm.getCantidadVehiculos(); j++){
+			largosCaminos[j] = 0;
+		}
+		for (int i=0;i<_var.size();i++){//recorro tupla solucion(tareas)
+			if(_var[i] == -2){
+				break;
+			}
+			if(_var[i] == -1){
+				iterVehiculos ++;
+				if (iterVehiculos == _pbm.getCantidadVehiculos()){
+					iterVehiculos = 0;
+				}
+			}else{
+
+				largosCaminos[iterVehiculos] += 1;
+				i++;
+			}
+
+		}
+
+		int largoMasLargo = largosCaminos[0];
+		for(int j=1; j<_pbm.getCantidadVehiculos();j++){
+			if(largosCaminos[j] > largoMasLargo){
+				largoMasLargo = largosCaminos[j];
 			}
 		}
+
 		return largoMasLargo;
 	}
 
@@ -599,128 +745,103 @@ printf("%d\n", caminos.size());
 
 	void Crossover::cross(Solution& sol1,Solution& sol2) const
 	{
-		// bool iguales = true;
-		// for(int y=0;y <sol1.pbm().dimension(); y++){
-		// 	if (sol1.var(y) != sol2.var(y)){
-		// 		iguales = false;
+		// Se implementa cruzamiento de un punto, que implica intercambiar las rutas para un vehiculo
+		// Se controla que se mantenga una solucion factible
+// printf("%s\n", "cross");
+		sol1.convertVarToCaminos();
+		sol2.convertVarToCaminos();
+		vector<tupleList> caminosSol1 = sol1.getCaminos();
+		vector<tupleList> caminosSol2 = sol2.getCaminos();
+		// printf("%s\n", "CAMINO 1");
+		// for (int i = 0; i < caminosSol1.size(); i ++){
+		// 	tupleList camino = caminosSol1[i];
+		// 	for(int j = 0; j < camino.size(); j++){
+		// 		printf("%d-", get<0>(camino[j]));
+		// 		printf("%d\n", get<1>(camino[j]));
+		// 	}
+		// 	printf("%s\n", "finCamino");
+		// }
+		// printf("%s\n", "CAMINO 2");
+		// for (int i = 0; i < caminosSol2.size(); i ++){
+		// 	tupleList camino = caminosSol2[i];
+		// 	for(int j = 0; j < camino.size(); j++){
+		// 		printf("%d-", get<0>(camino[j]));
+		// 		printf("%d\n", get<1>(camino[j]));
+		// 	}
+		// 	printf("%s\n", "finCamino");
+		// }
+		// printf("%s\n", "camino 1");
+		// for(int i = 0 ;i <sol1.array_var().size(); i++){
+		// 	if(sol1.var(i) == -2){
 		// 		break;
 		// 	}
+		// 		printf("%d-", sol1.var(i));
 		// }
-		// if(iguales){
-		// 	sol2.initialize();
-		// }else{
-		// 	int i=0;
-		// 	Rarray<int> aux(sol1.pbm().dimension());
-		// 	Rarray<int> aux2(sol2.pbm().dimension());
-		// 	aux=sol2.array_var();
-		// 	aux2=sol1.array_var();
-		// 	bool end = false;
-		// 	double tiempo_empleado[sol1.pbm().cantidadempleados() +1];
-		// 	double tiempo_empleado2[sol1.pbm().cantidadempleados() +1];
-		// 	double coef =0;
-		// 	for (int k=1;k<=sol1.pbm().cantidadempleados();k++){
-		// 		tiempo_empleado[k] = 0.0;
-		// 		tiempo_empleado2[k] = 0.0;
+		// printf("%s\n", "camino 2");
+		// for(int i = 0 ;i <sol2.array_var().size(); i++){
+		// 	if(sol2.var(i) == -2){
+		// 		break;
 		// 	}
-		// 	double tiempo =0;
-		// 	int limit=rand_int((sol1.pbm().dimension()/2)+1,sol1.pbm().dimension()-1);
-		// 	int limit2=rand_int(0,limit-1);
-		// 	for (i=0;i<limit2;i++){
-		// 		sol2.var(i)=sol1.var(i);
-		// 		coef = sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(sol2.var(i)-1));
-		// 		tiempo_empleado2[sol2.var(i)] += coef;
-		// 	}
-		//
-		// 	for (int i=0;i<limit2;i++){
-		// 		sol1.var(i)=aux[i];
-		// 		coef = sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-		// 		tiempo_empleado[sol1.var(i)] += coef;
-		// 	}
-		//
-		// 	for (i= limit2; i<limit;i++){
-		// 		tiempo = tiempo_empleado2[sol2.var(i)];
-		// 		tiempo += sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(sol2.var(i)-1));
-		// 		if(sol2.isValid(tiempo, sol2.pbm().getdisponibilidad(sol2.var(i)-1), sol2.pbm().limiteproyecto())){
-		// 			tiempo_empleado2[sol2.var(i)] = tiempo;
-		// 		}else{
-		// 			tiempo = tiempo_empleado2[sol1.var(i)];
-		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-		// 				tiempo_empleado2[sol1.var(i)] = tiempo;
-		// 				sol2.var(i) = sol1.var(i);
-		// 			}
-		// 			else{
-		// 				end = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 		if(!end){
-		// 			//SOLUCION1
-		// 			tiempo = tiempo_empleado[sol1.var(i)];
-		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-		// 				tiempo_empleado[sol1.var(i)] = tiempo;
-		// 			}else{
-		// 				tiempo = tiempo_empleado[aux[i]];
-		// 				tiempo += sol2.pbm().gettiempotarea(i)/(0.5 +sol2.pbm().gethabilidad(aux[i]-1));
-		// 				if(sol2.isValid(tiempo, sol2.pbm().getdisponibilidad(aux[i]-1), sol2.pbm().limiteproyecto())){
-		// 					tiempo_empleado[aux[i]] = tiempo;
-		// 					sol1.var(i) = aux[i];
-		// 				}else{
-		// 					end = true;
-		// 					break;
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// 	if(!end){
-		// 		for (i=limit;i<sol1.pbm().dimension();i++){
-		// 			tiempo = tiempo_empleado2[sol1.var(i)];
-		// 			double _habilidad_empleado = sol1.pbm().gethabilidad(sol1.var(i)-1);
-		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +_habilidad_empleado);
-		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-		// 				tiempo_empleado2[sol1.var(i)] = tiempo;
-		// 				sol2.var(i) = sol1.var(i);
-		// 			}else{
-		// 				tiempo = tiempo_empleado2[sol2.var(i)];
-		// 				tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol2.var(i)-1));
-		// 				if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol2.var(i)-1), sol1.pbm().limiteproyecto())){
-		// 					tiempo_empleado2[sol2.var(i)] = tiempo;
-		// 				}else{
-		// 					end = true;
-		// 					break;
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// 	if(!end){
-		// 		for (i=limit;i<sol1.pbm().dimension();i++){
-		// 			tiempo = tiempo_empleado[aux[i]];
-		// 			tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(aux[i]-1));
-		// 			if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(aux[i]-1), sol1.pbm().limiteproyecto())){
-		// 				sol1.var(i)=aux[i];
-		// 				tiempo_empleado[sol1.var(i)] = tiempo;
-		// 			}else{
-		// 				tiempo = tiempo_empleado[sol1.var(i)];
-		// 				tiempo += sol1.pbm().gettiempotarea(i)/(0.5 +sol1.pbm().gethabilidad(sol1.var(i)-1));
-		// 				if(sol1.isValid(tiempo, sol1.pbm().getdisponibilidad(sol1.var(i)-1), sol1.pbm().limiteproyecto())){
-		// 					tiempo_empleado[sol1.var(i)] = tiempo;
-		// 				}else{
-		// 					end = true;
-		// 					break;
-		// 				}
-		//
-		// 			}
-		// 		}
-		// 	}
-		// 	if(end){ //no hago el cruzamiento
-		// 		sol2.array_var()=aux;
-		// 		sol1.array_var()=aux2;
-		// 	}
+		// 		printf("%d-", sol2.var(i));
 		// }
+		int puntoDeCorte = rand_int(0,caminosSol1.size() -1);
+		// printf("%s-", "puntoDeCorte");
+		// printf("%d\n", puntoDeCorte);
+		// for(int i = puntoDeCorte; i<caminosSol1.size(); i+=punto){
+			if ((puntoDeCorte < caminosSol1.size())&& (puntoDeCorte < caminosSol2.size())){
 
+				caminosSol1[puntoDeCorte].swap(caminosSol2[puntoDeCorte]);
+			}
 
+		// }
+// printf("%s\n", "pasa for");
+	// printf("%s", "porcentaje: ");
+	// printf("%d\n", sol1.total_explorado());
+	// printf("%d\n", sol1.pbm().getCantidadZonas());
 
+		sol1.setCaminos(caminosSol1);
+		sol2.setCaminos(caminosSol2);
+		std::vector<tupleList>().swap(caminosSol1);
+		std::vector<tupleList>().swap(caminosSol2);
+		// printf("%s\n", "CAMINO 1");
+		// for (int i = 0; i < caminosSol1.size(); i ++){
+		// 	tupleList camino = caminosSol1[i];
+		// 	for(int j = 0; j < camino.size(); j++){
+		// 		printf("%d-", get<0>(camino[j]));
+		// 		printf("%d\n", get<1>(camino[j]));
+		// 	}
+		// 	printf("%s\n", "finCamino");
+		// }
+		// printf("%s\n", "CAMINO 2");
+		// for (int i = 0; i < caminosSol2.size(); i ++){
+		// 	tupleList camino = caminosSol2[i];
+		// 	for(int j = 0; j < camino.size(); j++){
+		// 		printf("%d-", get<0>(camino[j]));
+		// 		printf("%d\n", get<1>(camino[j]));
+		// 	}
+		// 	printf("%s\n", "finCamino");
+		// }
+		if(sol1.cumpleObjetivo() && sol2.cumpleObjetivo()){
+			// printf("%d\n", ((double)sol1.total_explorado() / sol1.pbm().getCantidadZonas()));
+			sol1.convertCaminosToVar();
+			sol2.convertCaminosToVar();
+
+			// printf("%s\n", "camino 1");
+			// for(int i = 0 ;i <sol1.array_var().size(); i++){
+			// 	if(sol1.var(i) == -2){
+			// 		break;
+			// 	}
+			// 		printf("%d-", sol1.var(i));
+			// }
+			// printf("%s\n", "camino 2");
+			// for(int i = 0 ;i <sol2.array_var().size(); i++){
+			// 	if(sol2.var(i) == -2){
+			// 		break;
+			// 	}
+			// 		printf("%d-", sol2.var(i));
+			// }
+		}
+// printf("%s\n", "end cross");
 	}
 
 	void Crossover::execute(Rarray<Solution*>& sols) const
@@ -769,29 +890,54 @@ printf("%d\n", caminos.size());
 
 	void Mutation::mutate(Solution& sol) const
 	{
-		if (rand01()<=probability[1]){
-	        // int i = rand_int(0, sol.pbm().dimension() -1);
-					// bool encontre = false;
-					// int iter = 0;
-					//
-					// while (! encontre && iter < 20){
-					// 	int indice = rand_int(1,sol.pbm().cantidadempleados());
-					// 	if (indice != sol.var(i)){
-					// 		double tiempo_empleado = 0;
-					// 		for (int j =0; j < sol.pbm().dimension(); j++){
-					// 			if(sol.var(j)== indice && j != i){
-					// 				tiempo_empleado += sol.pbm().gettiempotarea(j)/(0.5 +sol.pbm().gethabilidad(indice-1));
-					// 			}
-					// 		}
-					// 		tiempo_empleado += sol.pbm().gettiempotarea(i)/(0.5 +sol.pbm().gethabilidad(indice-1));
-					// 		if (sol.isValid(tiempo_empleado, sol.pbm().getdisponibilidad(indice-1), sol.pbm().limiteproyecto())){
-					// 				sol.var(i)= indice;
-					// 				encontre = true;
-					// 		}
-					// 	}
-					// 	iter ++;
-					// }
-	    }
+		// printf("%s\n", "mutate");
+		sol.convertVarToCaminos();
+		// for(int i = 0 ;i <sol.array_var().size(); i++){
+		// 	if(sol.var(i) == -2){
+		// 		break;
+		// 	}
+		// 		printf("%d-", sol.var(i));
+		// }
+		vector<tupleList> caminosSol1 = sol.getCaminos();
+		if(caminosSol1.size() >0){
+			int caminoABorrar = rand_int(0,caminosSol1.size() -1);
+			caminosSol1.erase(caminosSol1.begin() + caminoABorrar);
+		// 	tupleList caminosVehiculo = caminosSol1[vehiculo];
+		// // printf("%d\n", caminosSol1[vehiculo].size());
+		// 	int caminoABorrar = rand_int(0,caminosVehiculo.size());
+		// 	// printf("%d\n", caminosVehiculo.size());
+		// 	printf("%s\n", "caminosVehicule");
+		// 	for(int i = 0 ; i < caminosVehiculo.size(); i ++){
+		// 		printf("%d-", get<0>(caminosVehiculo[i]));
+		// 		printf("%d\n", get<1>(caminosVehiculo[i]));
+		// 	}
+		// 	caminosVehiculo.erase(caminosVehiculo.begin() + caminoABorrar);
+		// 	 caminosSol1[vehiculo]= caminosVehiculo;
+		// 	 printf("%s\n", "caminosVehiculeAfterremove");
+		// 	 for(int i = 0 ; i < caminosVehiculo.size(); i ++){
+		// 		 printf("%d-", get<0>(caminosVehiculo[i]));
+		// 		 printf("%d\n", get<1>(caminosVehiculo[i]));
+			sol.setCaminos(caminosSol1);
+
+			std::vector<tupleList>().swap(caminosSol1);
+
+			if(sol.cumpleObjetivo()){
+				// printf("%s\n", "cumpleObjetivo");
+				// printf("%s\n", "After mutate");
+				sol.convertCaminosToVar();
+				// for(int i = 0 ;i <sol.array_var().size(); i++){
+				// 	if(sol.var(i) == -2){
+				// 		break;
+				// 	}
+				// printf("%d-", sol.var(i));
+
+			}
+		}
+
+			// printf("%d\n", caminosVehiculo.size());
+			// printf("%d\n", caminosSol1[vehiculo].size());
+
+
 	}
 
 	void Mutation::execute(Rarray<Solution*>& sols) const

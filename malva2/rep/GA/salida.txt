@@ -1,0 +1,495 @@
+ Mejor Fitness: 18
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 43407
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 13739
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9303
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9882
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 10134
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9440
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9721
+********************************************************** Mejor Fitness: 16
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 25953
+********************************************************** Mejor Fitness: 16
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 25475
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 5681
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 6200
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 5785
+********************************************************** Mejor Fitness: 21
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 10364
+********************************************************** Mejor Fitness: 21
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9302
+********************************************************** Mejor Fitness: 21
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9670
+********************************************************** Mejor Fitness: 15
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 33590
+********************************************************** Mejor Fitness: 15
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 30943
+********************************************************** Mejor Fitness: 15
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 31486
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 11389
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 10837
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9892
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 14315
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 13439
+********************************************************** Mejor Fitness: 15
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 40437
+********************************************************** Mejor Fitness: 15
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 38292
+********************************************************** Mejor Fitness: 15
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 38477
+********************************************************** Mejor Fitness: 20
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 5848
+********************************************************** Mejor Fitness: 20
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 6278
+********************************************************** Mejor Fitness: 20
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 5261
+********************************************************** Mejor Fitness: 16
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 5938
+********************************************************** Mejor Fitness: 16
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 7295
+********************************************************** Mejor Fitness: 16
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 5774
+********************************************************** Mejor Fitness: 20
+ Iteracion Mejor Fitness: 0
+ Tiempo para encontrar mejor solucion: 0
+********************************************************** Mejor Fitness: 20
+ Iteracion Mejor Fitness: 0
+ Tiempo para encontrar mejor solucion: 0
+********************************************************** Mejor Fitness: 20
+ Iteracion Mejor Fitness: 0
+ Tiempo para encontrar mejor solucion: 0
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 9614
+********************************************************** Mejor Fitness: 18
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 10102
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 14073
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 13522
+********************************************************** Mejor Fitness: 17
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 13718
+********************************************************** Mejor Fitness: 95
+ Iteracion Mejor Fitness: 17
+ Tiempo para encontrar mejor solucion: 165245
+********************************************************** Mejor Fitness: 87
+ Iteracion Mejor Fitness: 9
+ Tiempo para encontrar mejor solucion: 95981
+********************************************************** Mejor Fitness: 91
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 126474
+********************************************************** Mejor Fitness: 98
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 77364
+********************************************************** Mejor Fitness: 89
+ Iteracion Mejor Fitness: 14
+ Tiempo para encontrar mejor solucion: 149228
+********************************************************** Mejor Fitness: 80
+ Iteracion Mejor Fitness: 15
+ Tiempo para encontrar mejor solucion: 146068
+********************************************************** Mejor Fitness: 73
+ Iteracion Mejor Fitness: 19
+ Tiempo para encontrar mejor solucion: 188178
+********************************************************** Mejor Fitness: 91
+ Iteracion Mejor Fitness: 11
+ Tiempo para encontrar mejor solucion: 116026
+********************************************************** Mejor Fitness: 91
+ Iteracion Mejor Fitness: 11
+ Tiempo para encontrar mejor solucion: 116624
+********************************************************** Mejor Fitness: 77
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 99966
+********************************************************** Mejor Fitness: 78
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 128122
+********************************************************** Mejor Fitness: 99
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 95016
+********************************************************** Mejor Fitness: 96
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 38648
+********************************************************** Mejor Fitness: 78
+ Iteracion Mejor Fitness: 24
+ Tiempo para encontrar mejor solucion: 230962
+********************************************************** Mejor Fitness: 90
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 67384
+********************************************************** Mejor Fitness: 90
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 73342
+********************************************************** Mejor Fitness: 91
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 130280
+********************************************************** Mejor Fitness: 96
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 121940
+********************************************************** Mejor Fitness: 94
+ Iteracion Mejor Fitness: 11
+ Tiempo para encontrar mejor solucion: 118380
+********************************************************** Mejor Fitness: 86
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 110082
+********************************************************** Mejor Fitness: 89
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 86490
+********************************************************** Mejor Fitness: 89
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 88812
+********************************************************** Mejor Fitness: 84
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 120500
+********************************************************** Mejor Fitness: 83
+ Iteracion Mejor Fitness: 14
+ Tiempo para encontrar mejor solucion: 141188
+********************************************************** Mejor Fitness: 78
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 103860
+********************************************************** Mejor Fitness: 88
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 89552
+********************************************************** Mejor Fitness: 87
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 103008
+********************************************************** Mejor Fitness: 87
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 103876
+********************************************************** Mejor Fitness: 97
+ Iteracion Mejor Fitness: 11
+ Tiempo para encontrar mejor solucion: 116884
+********************************************************** Mejor Fitness: 97
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 83864
+********************************************************** Mejor Fitness: 91
+ Iteracion Mejor Fitness: 11
+ Tiempo para encontrar mejor solucion: 114832
+********************************************************** Mejor Fitness: 100
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 50976
+********************************************************** Mejor Fitness: 88
+ Iteracion Mejor Fitness: 13
+ Tiempo para encontrar mejor solucion: 134128
+********************************************************** Mejor Fitness: 89
+ Iteracion Mejor Fitness: 13
+ Tiempo para encontrar mejor solucion: 142576
+********************************************************** Mejor Fitness: 89
+ Iteracion Mejor Fitness: 13
+ Tiempo para encontrar mejor solucion: 137596
+********************************************************** Mejor Fitness: 96
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 90376
+********************************************************** Mejor Fitness: 83
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 64588
+********************************************************** Mejor Fitness: 89
+ Iteracion Mejor Fitness: 16
+ Tiempo para encontrar mejor solucion: 164400
+********************************************************** Mejor Fitness: 93
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 109480
+********************************************************** Mejor Fitness: 85
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 112752
+********************************************************** Mejor Fitness: 57
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 43156
+********************************************************** Mejor Fitness: 57
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 48744
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 67636
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 74604
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 35316
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 14
+ Tiempo para encontrar mejor solucion: 130092
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 17
+ Tiempo para encontrar mejor solucion: 157264
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 17
+ Tiempo para encontrar mejor solucion: 160380
+********************************************************** Mejor Fitness: 50
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 36800
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 87616
+********************************************************** Mejor Fitness: 50
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 59580
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 79292
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 10
+ Tiempo para encontrar mejor solucion: 105552
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 37732
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 36232
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 79216
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 65896
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 70644
+********************************************************** Mejor Fitness: 50
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 64704
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 86740
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 9
+ Tiempo para encontrar mejor solucion: 94168
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 9
+ Tiempo para encontrar mejor solucion: 91332
+********************************************************** Mejor Fitness: 56
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 49792
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 39128
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 87224
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 59016
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 70928
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 44032
+********************************************************** Mejor Fitness: 45
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 76216
+********************************************************** Mejor Fitness: 50
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 39256
+********************************************************** Mejor Fitness: 44
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 75088
+********************************************************** Mejor Fitness: 44
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 77480
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 88712
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 38904
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 69544
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 50576
+********************************************************** Mejor Fitness: 58
+ Iteracion Mejor Fitness: 11
+ Tiempo para encontrar mejor solucion: 151912
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 73680
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 50440
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 77096
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 33864
+********************************************************** Mejor Fitness: 43
+ Iteracion Mejor Fitness: 9
+ Tiempo para encontrar mejor solucion: 167800
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 54648
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 69808
+********************************************************** Mejor Fitness: 50
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 53368
+********************************************************** Mejor Fitness: 54
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 38832
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 9
+ Tiempo para encontrar mejor solucion: 132600
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 40544
+********************************************************** Mejor Fitness: 50
+ Iteracion Mejor Fitness: 7
+ Tiempo para encontrar mejor solucion: 84472
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 87096
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 78200
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 46008
+********************************************************** Mejor Fitness: 45
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 208200
+********************************************************** Mejor Fitness: 41
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 96328
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 53480
+********************************************************** Mejor Fitness: 45
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 152400
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 128640
+********************************************************** Mejor Fitness: 41
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 79040
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 29696
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 63984
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 80872
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 58848
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 43504
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 101120
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 145672
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 54232
+********************************************************** Mejor Fitness: 43
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 83920
+********************************************************** Mejor Fitness: 51
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 128480
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 155376
+********************************************************** Mejor Fitness: 52
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 137072
+********************************************************** Mejor Fitness: 44
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 146344
+********************************************************** Mejor Fitness: 43
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 142160
+********************************************************** Mejor Fitness: 44
+ Iteracion Mejor Fitness: 3
+ Tiempo para encontrar mejor solucion: 95632
+********************************************************** Mejor Fitness: 46
+ Iteracion Mejor Fitness: 6
+ Tiempo para encontrar mejor solucion: 192848
+********************************************************** Mejor Fitness: 44
+ Iteracion Mejor Fitness: 2
+ Tiempo para encontrar mejor solucion: 128208
+********************************************************** Mejor Fitness: 47
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 182224
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 137328
+********************************************************** Mejor Fitness: 48
+ Iteracion Mejor Fitness: 5
+ Tiempo para encontrar mejor solucion: 118192
+********************************************************** Mejor Fitness: 49
+ Iteracion Mejor Fitness: 4
+ Tiempo para encontrar mejor solucion: 104976
+********************************************************** Mejor Fitness: 53
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 311328
+********************************************************** Mejor Fitness: 217
+ Iteracion Mejor Fitness: 15
+ Tiempo para encontrar mejor solucion: 3.46789e+06
+********************************************************** Mejor Fitness: 173
+ Iteracion Mejor Fitness: 15
+ Tiempo para encontrar mejor solucion: 3.04382e+06
+********************************************************** Mejor Fitness: 219
+ Iteracion Mejor Fitness: 16
+ Tiempo para encontrar mejor solucion: 3.23885e+06
+********************************************************** Mejor Fitness: 208
+ Iteracion Mejor Fitness: 12
+ Tiempo para encontrar mejor solucion: 1.96382e+06
+********************************************************** Mejor Fitness: 208
+ Iteracion Mejor Fitness: 33
+ Tiempo para encontrar mejor solucion: 4.83134e+06

@@ -1,9 +1,9 @@
 include ../../environment
 
-all: MainLan MainSeq ejercicio2
+all: MainLan MainSeq ejercicio2 script_ejecuciones
 
 clean:
-	rm -f MainLan MainSeq MainWan ejercicio2 *.o *% *~
+	rm -f MainLan MainSeq MainWan ejercicio2 script_ejecuciones *.o *% *~
 
 MainLan: newGA.req.o newGA.pro.o MainLan.o
 	$(CXX) $(LDFLAGS) $^ $(LOADLIBES) $(CPPFLAGS) -o $@

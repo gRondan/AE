@@ -1,0 +1,82 @@
+Configuracion: pc: 0pm: 0poblacion: 0 Mejor Fitness: 108
+ Iteracion Mejor Fitness: 8
+ Tiempo para encontrar mejor solucion: 31091
+**********************************************************Configuracion: pc: 0pm: 0poblacion: 1 Mejor Fitness: 147
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 10575
+**********************************************************Configuracion: pc: 0pm: 0poblacion: 2 Mejor Fitness: 138
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 14618
+**********************************************************Configuracion: pc: 1pm: 0poblacion: 0 Mejor Fitness: 135
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 10115
+**********************************************************Configuracion: pc: 1pm: 0poblacion: 1 Mejor Fitness: 142
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 15754
+**********************************************************Configuracion: pc: 1pm: 0poblacion: 2 Mejor Fitness: 129
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 20341
+**********************************************************Configuracion: pc: 2pm: 0poblacion: 0 Mejor Fitness: 134
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 26200
+**********************************************************Configuracion: pc: 2pm: 0poblacion: 1 Mejor Fitness: 113
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 30151
+**********************************************************Configuracion: pc: 2pm: 0poblacion: 2 Mejor Fitness: 107
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 33676
+**********************************************************Configuracion: pc: 0pm: 1poblacion: 0 Mejor Fitness: 124
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 19558
+**********************************************************Configuracion: pc: 0pm: 1poblacion: 1 Mejor Fitness: 121
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 21752
+**********************************************************Configuracion: pc: 0pm: 1poblacion: 2 Mejor Fitness: 115
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 23365
+**********************************************************Configuracion: pc: 1pm: 1poblacion: 0 Mejor Fitness: 124
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 21197
+**********************************************************Configuracion: pc: 1pm: 1poblacion: 1 Mejor Fitness: 104
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 27321
+**********************************************************Configuracion: pc: 1pm: 1poblacion: 2 Mejor Fitness: 104
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 30524
+**********************************************************Configuracion: pc: 2pm: 1poblacion: 0 Mejor Fitness: 120
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 52646
+**********************************************************Configuracion: pc: 2pm: 1poblacion: 1 Mejor Fitness: 120
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 60478
+**********************************************************Configuracion: pc: 2pm: 1poblacion: 2 Mejor Fitness: 113
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 58207
+**********************************************************Configuracion: pc: 0pm: 2poblacion: 0 Mejor Fitness: 102
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 33798
+**********************************************************Configuracion: pc: 0pm: 2poblacion: 1 Mejor Fitness: 102
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 37313
+**********************************************************Configuracion: pc: 0pm: 2poblacion: 2 Mejor Fitness: 115
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 38807
+**********************************************************Configuracion: pc: 1pm: 2poblacion: 0 Mejor Fitness: 109
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 35191
+**********************************************************Configuracion: pc: 1pm: 2poblacion: 1 Mejor Fitness: 104
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 38112
+**********************************************************Configuracion: pc: 1pm: 2poblacion: 2 Mejor Fitness: 120
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 44423
+**********************************************************Configuracion: pc: 2pm: 2poblacion: 0 Mejor Fitness: 111
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 72177
+**********************************************************Configuracion: pc: 2pm: 2poblacion: 1 Mejor Fitness: 104
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 80329
+**********************************************************Configuracion: pc: 2pm: 2poblacion: 2 Mejor Fitness: 113
+ Iteracion Mejor Fitness: 1
+ Tiempo para encontrar mejor solucion: 87945
+**********************************************************

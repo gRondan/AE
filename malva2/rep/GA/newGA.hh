@@ -123,9 +123,16 @@ skeleton newGA
     int explorarZona(int largo, int ancho, int vehiculo);
     bool isAlreadyExplored(int largo, int ancho) const;
 		double fitness ();
-    tupleList construirCamino(int vehiculo);
+    tupleList construirCamino(int vehiculo, bool greedy);
+    vector<tupleList> getCaminos();
+    void setCaminos(vector<tupleList> caminos2);
     bool objetivoCumplido() const;
+    bool cumpleObjetivo();
     unsigned int size() const;
+    void convertCaminosToVar();
+    void convertVarToCaminos();
+    void initializeMapaExplorado();
+    int total_explorado();
 
 		int& var(const int index);
 		Rarray<int>& array_var();
